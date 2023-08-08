@@ -1,25 +1,22 @@
 from reportlab.pdfgen import canvas
+from reportlab.lib.units import cm
 
-def GeneratePDF(lista):
+def GeneratePDF(nome_pdf):
     try:
-        nome_pdf = input('Informe o nome do PDF: ')
-        pdf = canvas.Canvas('{}.pdf'.format(nome_pdf))
-        x = 720
-        for nome,idade in lista.items():
-            x -= 20
-            pdf.drawString(247,x, '{} : {}'.format(nome,idade))
-        pdf.setTitle(nome_pdf)
-        pdf.setFont("Helvetica-Oblique", 14)
-        pdf.drawString(245,750, 'Lista de Convidados')
-        pdf.setFont("Helvetica-Bold", 12)
-        pdf.drawString(245,724, 'Nome e idade')
-        pdf.save()
-        print('{}.pdf criado com sucesso!'.format(nome_pdf))
-
+        img_file = 'base.jpg'
+        nome_pdf += '.pdf'
         
-    except:
-        print('Erro ao gerar {}.pdf'.format(nome_pdf))
+        can = canvas.Canvas(nome_pdf)
+        x_start = 21*cm
+        y_start = 29,7*cm
+        can.drawImage(img_file, 0, 5, 21*cm, 29.7*cm,mask='auto')
+        
+        can.showPage()
+        can.save()
 
-lista = {'Rafaela': '19', 'Jose': '15', 'Maria': '22','Eduardo':'24'}
 
-GeneratePDF(lista)
+    except: 
+        print('Erro ao gerar {}.pdf'.format(nome_pdf)) 
+
+nome = input("Informe o nome do arquivo: ")
+GeneratePDF(nome)
